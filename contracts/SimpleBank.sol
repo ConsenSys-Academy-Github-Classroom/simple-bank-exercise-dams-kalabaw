@@ -75,7 +75,7 @@ contract SimpleBank {
 
     /// @notice Deposit ether into bank
     /// @return The balance of the user after the deposit is made
-    function deposit() public returns (uint256) {
+    function deposit() public payable returns (uint256) {
         // 1. Add the appropriate keyword so that this function can receive ether
 
         // 2. Users should be enrolled before they can make deposits
