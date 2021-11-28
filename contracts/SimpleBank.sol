@@ -49,9 +49,6 @@ contract SimpleBank {
         revert();
     }
 
-    fallback() external receive {
-        revert();
-
     /// @notice Get balance
     /// @return The balance of the user
     function getBalance() public view returns (uint) {
