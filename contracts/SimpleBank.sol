@@ -49,6 +49,9 @@ contract SimpleBank {
         revert();
     }
 
+    fallback() external receive {
+        revert();
+
     /// @notice Get balance
     /// @return The balance of the user
     function getBalance() public view returns (uint) {
@@ -62,8 +65,12 @@ contract SimpleBank {
     /// @notice Enroll a customer with the bank
     /// @return The users enrolled status
     // Emit the appropriate event
+
     function enroll() public returns (bool){
       // 1. enroll of the sender of this transaction
+      enrolled[msg.sender] = true;
+      emit LogEnrolled(msg.sender);
+      return enrolled[msg.sender];
     }
 
     /// @notice Deposit ether into bank
@@ -78,7 +85,11 @@ contract SimpleBank {
 
       // 4. Emit the appropriate event associated with this function
 
-      // 5. return the balance of sndr of this transaction
+      // 5. return the balance of sndr of this transaction.
+          balances[msg.sender] += msg.value;
+          emit LogDepositMade(msg.sender, msg.value);
+
+          return balances[msg.sender];
     }
 
     /// @notice Withdraw ether from bank
@@ -97,5 +108,15 @@ contract SimpleBank {
       //    sender's balance
 
       // 3. Emit the appropriate event for this message
+           require(withdrawAmount <= balances[msg.sender]);
+
+           balances[msg.sender] -= withdrawAmount;
+           
+           if(!msg.sender.send(withdrawAmount)){
+             balances[msg.sender] += withdrawAmount;
+           }
+           else{
+             emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
+           }
     }
 }
