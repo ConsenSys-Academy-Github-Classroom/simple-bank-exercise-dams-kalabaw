@@ -48,14 +48,14 @@ contract SimpleBank {
     // Typically, called when invalid data is sent
     // Added so ether sent to this contract is reverted if the contract fails
     // otherwise, the sender's money is transferred to contract
-    fallback() external payable {
-        revert();
-    }
+    //fallback() external payable {
+    //    revert();
+    //}
 
     /// @notice Get balance
     /// @return The balance of the user
     function getBalance() public view returns (uint256) {
-        return address(this).balance;
+        return balances[msg.sender];
 
         // 1. A SPECIAL KEYWORD prevents function from editing state variables;
         //    allows function to run locally/off blockchain
@@ -106,7 +106,6 @@ contract SimpleBank {
         // 3. Emit the appropriate event for this message
 
         require(withdrawAmount <= balances[msg.sender]);
-        balances[msg.sender] -= withdrawAmount;
         emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
         return balances[msg.sender];
     }
