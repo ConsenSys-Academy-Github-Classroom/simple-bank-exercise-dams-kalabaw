@@ -105,15 +105,10 @@ contract SimpleBank {
       //    sender's balance
 
       // 3. Emit the appropriate event for this message
-           require(withdrawAmount <= balances[msg.sender]);
-
-           balances[msg.sender] -= withdrawAmount;
-           
-           if(!msg.sender.send(withdrawAmount)){
-             balances[msg.sender] += withdrawAmount;
-           }
-           else{
-             emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
+            assert(balances[msg.sender] >= withdrawAmount);
+            balances[msg.sender] -= withdrawAmount;
+            emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
+            return balances[msg.sender];
            }
     }
 }
