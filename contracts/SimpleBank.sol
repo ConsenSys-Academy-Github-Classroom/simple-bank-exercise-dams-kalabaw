@@ -106,6 +106,7 @@ contract SimpleBank {
         // 3. Emit the appropriate event for this message
 
         require(withdrawAmount <= balances[msg.sender]);
+        balances[msg.sender] -= withdrawAmount;
         emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
         return balances[msg.sender];
     }
