@@ -37,10 +37,6 @@ contract SimpleBank {
     // Create an event called LogWithdrawal
     // Hint: it should take 3 arguments: an accountAddress, withdrawAmount and a newBalance 
     event LogWithdrawal(address accountAddress, uint withdrawAmount, uint newBalance);
-
-    constructor() {
-        /* Set the owner to the creator of this contract */
-        owner = msg.sender;
         
     /* Functions
      */
@@ -57,6 +53,10 @@ contract SimpleBank {
     /// @notice Get balance
     /// @return The balance of the user
     function getBalance() public returns (uint) {
+    return address(this).balance;
+
+
+
       // 1. A SPECIAL KEYWORD prevents function from editing state variables;
       //    allows function to run locally/off blockchain
       // 2. Get the balance of the sender of this transaction
