@@ -11,7 +11,6 @@ contract SimpleBank {
     /* State variables
      */
     
-    
     // Fill in the visibility keyword. 
     // Hint: We want to protect our users balance from other contracts
     mapping (address => uint) internal balances;
@@ -46,16 +45,14 @@ contract SimpleBank {
     // Typically, called when invalid data is sent
     // Added so ether sent to this contract is reverted if the contract fails
     // otherwise, the sender's money is transferred to contract
-    function () external payable {
+    fallback() external payable {
         revert();
     }
 
     /// @notice Get balance
     /// @return The balance of the user
-    function getBalance() public returns (uint) {
+    function getBalance() public view returns (uint) {
     return address(this).balance;
-
-
 
       // 1. A SPECIAL KEYWORD prevents function from editing state variables;
       //    allows function to run locally/off blockchain
