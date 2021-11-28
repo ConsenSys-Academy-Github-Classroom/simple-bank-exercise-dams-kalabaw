@@ -38,6 +38,10 @@ contract SimpleBank {
     // Hint: it should take 3 arguments: an accountAddress, withdrawAmount and a newBalance 
     event LogWithdrawal(address accountAddress, uint withdrawAmount, uint newBalance);
 
+    constructor() {
+        /* Set the owner to the creator of this contract */
+        owner = msg.sender;
+        
     /* Functions
      */
 
